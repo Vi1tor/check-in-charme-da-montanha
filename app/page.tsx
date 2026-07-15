@@ -14,7 +14,6 @@ import {
   Phone, 
   MapPin,
   Calendar,
-  MessageCircle,
   Compass,
   Utensils,
   Sun,
@@ -36,6 +35,18 @@ import bgImage3 from './assets/WhatsApp Image 2026-07-15 at 16.22.51 (2).jpeg';
 import bgImage4 from './assets/WhatsApp Image 2026-07-15 at 16.22.51 (3).jpeg';
 import bgImage5 from './assets/WhatsApp Image 2026-07-15 at 16.22.52.jpeg';
 import bgImage6 from './assets/WhatsApp Image 2026-07-15 at 16.22.52 (1).jpeg';
+
+const WhatsAppIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M12.04 2C6.58 2 2.15 6.38 2.15 11.76c0 1.73.47 3.41 1.35 4.91L2 22l5.48-1.46c1.44.77 3.06 1.18 4.68 1.18h.01c5.46 0 9.89-4.38 9.89-9.76 0-2.61-1.05-5.06-2.95-6.91A10.07 10.07 0 0 0 12.04 2Zm0 17.8h-.01a8.83 8.83 0 0 1-4.48-1.22l-.32-.19-3.25.87.87-3.16-.21-.34a8.3 8.3 0 0 1-1.3-4.42c0-4.57 3.77-8.28 8.4-8.28 2.25 0 4.36.86 5.95 2.43a8.07 8.07 0 0 1 2.47 5.85c0 4.57-3.77 8.26-8.12 8.46Zm4.6-6.05c-.25-.12-1.5-.74-1.74-.82-.23-.09-.4-.12-.57.12-.17.25-.66.82-.8.99-.15.17-.3.19-.56.06-.25-.12-1.06-.38-2.02-1.2-.75-.67-1.25-1.49-1.39-1.74-.15-.25-.02-.38.11-.5.11-.11.25-.3.38-.45.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.07-.12-.57-1.36-.78-1.86-.2-.48-.41-.42-.57-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.12.17 1.78 2.73 4.32 3.83.6.26 1.07.41 1.44.53.61.19 1.16.16 1.59.1.49-.07 1.5-.61 1.71-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.29Z" />
+  </svg>
+);
 
 // --- Custom Brand Mountain SVG Logo ---
 const MountainLogo = ({ className = "w-20 h-14" }: { className?: string }) => (
@@ -601,7 +612,7 @@ export default function Page() {
         {/* Quick Help Sidebar Widget */}
         <div className="hidden md:block mt-6 space-y-4">
           {/* Weather Card for Desktop */}
-          <div className="p-4 rounded-2xl bg-stone-100/50 dark:bg-stone-900/40 border border-[#A68A56]/15 space-y-3 relative overflow-hidden backdrop-blur-sm shadow-sm">
+          <div className="card-glass p-4 rounded-2xl space-y-3 relative overflow-hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-secondary)]">Clima na Serra</span>
@@ -642,7 +653,7 @@ export default function Page() {
             )}
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#5A5A40] text-white shadow-md border border-white/5 relative overflow-hidden">
+          <div className="card-glass p-4 rounded-2xl text-white relative overflow-hidden bg-[rgba(90,90,64,0.52)] dark:bg-[rgba(90,90,64,0.38)]">
             <div className="relative z-10">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-base">💬</span>
@@ -710,7 +721,7 @@ export default function Page() {
           </div>
           
           {/* Quick Stats Widget */}
-          <div className="flex gap-3 text-xs bg-white/50 dark:bg-stone-900/30 border border-[#A68A56]/10 rounded-2xl p-3 shadow-sm">
+          <div className="card-glass flex gap-3 text-xs rounded-2xl p-3">
             <div className="text-center px-2">
               <span className="block text-[9px] uppercase tracking-wider opacity-60">Entrada</span>
               <span className="font-bold font-mono">15:00</span>
@@ -1157,14 +1168,14 @@ export default function Page() {
         {/* --- BOTTOM QUICK CONTACT PANEL (For Mobile/Tablets) --- */}
         <div className="mt-8 space-y-4">
           
-          <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-900/60 border border-[#A68A56]/15 text-sm space-y-3">
+          <div className="card-glass p-4 rounded-2xl text-sm space-y-3">
             <h4 className="font-bold text-xs uppercase tracking-wider text-[var(--brand-secondary)]">
               Canais de Comunicação Direta
             </h4>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               {/* Emergency lines */}
-              <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-[#A68A56]/10">
+              <div className="card-glass flex items-center gap-3 p-2.5 rounded-xl">
                 <div className="w-8 h-8 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center flex-shrink-0">
                   <Phone className="w-4 h-4" />
                 </div>
@@ -1177,7 +1188,7 @@ export default function Page() {
               </div>
 
               {/* Instagram */}
-              <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-[#A68A56]/10">
+              <div className="card-glass flex items-center gap-3 p-2.5 rounded-xl">
                 <div className="w-8 h-8 rounded-full bg-pink-500/10 text-pink-500 flex items-center justify-center flex-shrink-0">
                   <Instagram className="w-4 h-4" />
                 </div>
@@ -1203,7 +1214,7 @@ export default function Page() {
               rel="noopener noreferrer"
               className="w-full py-4 rounded-2xl bg-[#25D366] text-white font-bold text-sm tracking-wide shadow-md flex items-center justify-center gap-2"
             >
-              <MessageCircle className="w-5 h-5 fill-current" /> Falar com a Recepção (WhatsApp)
+              <WhatsAppIcon className="w-5 h-5" /> Falar com a Recepção (WhatsApp)
             </a>
           </motion.div>
         </div>

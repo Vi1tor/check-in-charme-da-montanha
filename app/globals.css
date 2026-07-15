@@ -15,8 +15,8 @@
     --brand-secondary: #A68A56;
     --brand-bg: #F5F5F0;
     --brand-ink: #2D2A26;
-    --card-bg: rgba(255, 255, 255, 0.75);
-    --card-border: rgba(166, 138, 86, 0.15);
+    --card-bg: rgba(255, 255, 255, 0.42);
+    --card-border: rgba(166, 138, 86, 0.18);
     --gold: #A68A56;
   }
 
@@ -26,8 +26,8 @@
       --brand-secondary: #c2aa7a;
       --brand-bg: #1A1A17;
       --brand-ink: #F5F5F0;
-      --card-bg: rgba(35, 35, 30, 0.85);
-      --card-border: rgba(166, 138, 86, 0.25);
+      --card-bg: rgba(35, 35, 30, 0.58);
+      --card-border: rgba(166, 138, 86, 0.28);
     }
   }
 
@@ -48,4 +48,5 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
