@@ -1,0 +1,8 @@
+{
+  "name": "Pousada Charme da Montanha",
+  "description": "Guia digital de check-in, regras, políticas, indicações e localização da Pousada Charme da Montanha em Monte Verde, MG.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
