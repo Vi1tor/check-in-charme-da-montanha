@@ -30,6 +30,12 @@ import {
   Navigation
 } from 'lucide-react';
 import Image from 'next/image';
+import bgImage1 from './assets/WhatsApp Image 2026-07-15 at 16.22.51.jpeg';
+import bgImage2 from './assets/WhatsApp Image 2026-07-15 at 16.22.51 (1).jpeg';
+import bgImage3 from './assets/WhatsApp Image 2026-07-15 at 16.22.51 (2).jpeg';
+import bgImage4 from './assets/WhatsApp Image 2026-07-15 at 16.22.51 (3).jpeg';
+import bgImage5 from './assets/WhatsApp Image 2026-07-15 at 16.22.52.jpeg';
+import bgImage6 from './assets/WhatsApp Image 2026-07-15 at 16.22.52 (1).jpeg';
 
 // --- Custom Brand Mountain SVG Logo ---
 const MountainLogo = ({ className = "w-20 h-14" }: { className?: string }) => (
@@ -425,6 +431,9 @@ export default function Page() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
+  const [backgroundIndex, setBackgroundIndex] = useState<number>(0);
+
+  const backgroundImages = [bgImage1, bgImage2, bgImage3, bgImage4, bgImage5, bgImage6];
 
   useEffect(() => {
     // Keep a soft elegant clock representing real local time
@@ -463,6 +472,14 @@ export default function Page() {
     return () => clearInterval(weatherInterval);
   }, []);
 
+  useEffect(() => {
+    const backgroundInterval = setInterval(() => {
+      setBackgroundIndex((currentIndex) => (currentIndex + 1) % backgroundImages.length);
+    }, 7000);
+
+    return () => clearInterval(backgroundInterval);
+  }, [backgroundImages.length]);
+
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     if (!isDarkMode) {
@@ -483,8 +500,32 @@ export default function Page() {
   return (
     <div className={`min-h-screen flex flex-col md:flex-row relative transition-colors duration-500 ${isDarkMode ? 'dark bg-[#1A1A17] text-[#F5F5F0]' : 'bg-[#F5F5F0] text-[#2D2A26]'}`}>
       
+      {/* Background carousel */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <AnimatePresence initial={false} mode="wait">
+          <motion.div
+            key={backgroundIndex}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.03 }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
+          >
+            <Image
+              src={backgroundImages[backgroundIndex]}
+              alt="Paisagem da pousada"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          </motion.div>
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(245,245,240,0.22)_0%,rgba(245,245,240,0.55)_45%,rgba(245,245,240,0.88)_100%)] dark:bg-[linear-gradient(180deg,rgba(26,26,23,0.28)_0%,rgba(26,26,23,0.6)_45%,rgba(26,26,23,0.9)_100%)]" />
+      </div>
+
       {/* Aesthetic Dot Pattern Background */}
-      <div className="absolute inset-0 dot-pattern pointer-events-none z-0" />
+      <div className="absolute inset-0 dot-pattern pointer-events-none z-[1]" />
 
       {/* --- SIDEBAR (Desktop) / TOP DRAWER (Mobile) --- */}
       <aside className="w-full md:w-80 md:h-screen md:sticky md:top-0 border-b md:border-b-0 md:border-r border-[#A68A56]/20 flex flex-col justify-between p-6 md:p-8 z-10 bg-white/40 dark:bg-black/20 backdrop-blur-md">
