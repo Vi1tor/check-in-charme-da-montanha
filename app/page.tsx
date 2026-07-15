@@ -77,7 +77,7 @@ const roomGuideItems = [
         <p>Aproveite nossa conexão de alta velocidade sem custo adicional.</p>
         <div className="p-3 bg-[var(--brand-primary)]/5 rounded-xl border border-[var(--brand-secondary)]/20 inline-block">
           <p className="text-sm font-semibold text-[var(--brand-ink)]">Senha do Wi-Fi:</p>
-          <p className="text-lg font-mono tracking-wider font-bold text-[var(--brand-secondary)]">charme2024</p>
+          <p className="text-lg font-mono tracking-wider font-bold text-[var(--brand-secondary)]">Charme2024@</p>
         </div>
       </div>
     )
