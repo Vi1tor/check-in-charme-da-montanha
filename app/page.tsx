@@ -26,7 +26,9 @@ import {
   Heart,
   ExternalLink,
   Instagram,
-  Navigation
+  Navigation,
+  Copy,
+  Check
 } from 'lucide-react';
 import Image from 'next/image';
 import bgImage1 from './assets/WhatsApp Image 2026-07-15 at 16.22.51.jpeg';
@@ -77,6 +79,8 @@ const MountainLogo = ({ className = "w-20 h-14" }: { className?: string }) => (
 
 // --- Data Structures ---
 
+const WIFI_PASSWORD = 'Charme2024@';
+
 const roomGuideItems = [
   {
     id: 'wifi',
@@ -88,7 +92,7 @@ const roomGuideItems = [
         <p>Aproveite nossa conexão de alta velocidade sem custo adicional.</p>
         <div className="p-3 bg-[var(--brand-primary)]/5 rounded-xl border border-[var(--brand-secondary)]/20 inline-block">
           <p className="text-sm font-semibold text-[var(--brand-ink)]">Senha do Wi-Fi:</p>
-          <p className="text-lg font-mono tracking-wider font-bold text-[var(--brand-secondary)]">Charme2024@</p>
+          <p className="text-lg font-mono tracking-wider font-bold text-[var(--brand-secondary)]">{WIFI_PASSWORD}</p>
         </div>
       </div>
     )
@@ -421,7 +425,7 @@ const contactInfo = {
   whatsappLink: 'https://wa.me/5535991962847?text=Olá!%20Estou%20hospedado%20na%20pousada%20e%20gostaria%20de%20uma%20informação.',
   instagramHandle: 'pousadacharmedamontanha',
   instagramUrl: 'https://instagram.com/pousadacharmedamontanha',
-  address: 'Avenida Monte Verde, 381, Monte Verde, Camanducaia - MG, CEP 37653-000',
+  address: 'Avenida Monte Verde, 381, Monte Verde, Camanducaia - MG, CEP 37650-000',
   addressDetails: 'Apenas 200 metros após a primeira rotatória do Portal de Entrada de Monte Verde, à esquerda.'
 };
 
@@ -443,6 +447,7 @@ export default function Page() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
   const [backgroundIndex, setBackgroundIndex] = useState<number>(0);
+  const [wifiCopied, setWifiCopied] = useState<boolean>(false);
 
   const backgroundImages = [bgImage1, bgImage2, bgImage3, bgImage4, bgImage5, bgImage6];
 
@@ -492,11 +497,16 @@ export default function Page() {
   }, [backgroundImages.length]);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    if (!isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    setIsDarkMode((prev) => !prev);
+  };
+
+  const copyWifiPassword = async () => {
+    try {
+      await navigator.clipboard.writeText(WIFI_PASSWORD);
+      setWifiCopied(true);
+      setTimeout(() => setWifiCopied(false), 2000);
+    } catch (err) {
+      console.error('Error copying wifi password:', err);
     }
   };
 
@@ -596,9 +606,9 @@ export default function Page() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-left ${
-                  isSelected 
-                    ? 'bg-[#5A5A40] text-white shadow-md' 
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-secondary)] ${
+                  isSelected
+                    ? 'bg-[#5A5A40] text-white shadow-md'
                     : 'hover:bg-[var(--brand-primary)]/5 text-[var(--brand-ink)]/70 hover:text-[var(--brand-ink)]'
                 }`}
               >
@@ -693,9 +703,9 @@ export default function Page() {
                 setActiveTab(tab.id);
                 document.getElementById('main-scroll-view')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                isSelected 
-                  ? 'bg-[#5A5A40] text-white shadow-sm' 
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-secondary)] ${
+                isSelected
+                  ? 'bg-[#5A5A40] text-white shadow-sm'
                   : 'bg-stone-200/50 dark:bg-stone-800/40 text-[var(--brand-ink)]/70'
               }`}
             >
@@ -732,10 +742,25 @@ export default function Page() {
               <span className="font-bold font-mono">12:00</span>
             </div>
             <div className="w-[1px] bg-[#A68A56]/20" />
-            <div className="text-center px-2">
+            <button
+              type="button"
+              onClick={copyWifiPassword}
+              className="text-center px-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-secondary)]"
+              title="Copiar senha do Wi-Fi"
+            >
               <span className="block text-[9px] uppercase tracking-wider opacity-60">Wi-Fi</span>
-              <span className="font-bold text-[var(--brand-secondary)]">Disponível</span>
-            </div>
+              <span className="font-bold text-[var(--brand-secondary)] font-mono flex items-center gap-1 justify-center">
+                {wifiCopied ? (
+                  <>
+                    <Check className="w-3 h-3" /> Copiado
+                  </>
+                ) : (
+                  <>
+                    {WIFI_PASSWORD} <Copy className="w-3 h-3 opacity-60" />
+                  </>
+                )}
+              </span>
+            </button>
           </div>
         </header>
 
@@ -776,7 +801,7 @@ export default function Page() {
                       >
                         <button 
                           onClick={() => setOpenRoomCard(isOpen ? null : item.id)}
-                          className="w-full p-4 flex items-center justify-between text-left focus:outline-none"
+                          className="w-full p-4 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--brand-secondary)]"
                         >
                           <div className="flex items-center gap-3.5">
                             <div className="w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 text-[#5A5A40] dark:text-[#9a9a7a] flex items-center justify-center">
@@ -851,7 +876,7 @@ export default function Page() {
                       >
                         <button 
                           onClick={() => setOpenPolicyCard(isOpen ? null : item.id)}
-                          className="w-full p-4 flex items-center justify-between text-left focus:outline-none"
+                          className="w-full p-4 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--brand-secondary)]"
                         >
                           <div className="flex items-center gap-3.5">
                             <div className="w-10 h-10 rounded-full bg-stone-200/50 dark:bg-stone-800/40 text-[var(--brand-ink)]/80 flex items-center justify-center">
@@ -1202,29 +1227,26 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Call to Reception Bar (Mobile Friendly) */}
-          <motion.div 
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            className="md:hidden"
-          >
-            <a 
-              href={contactInfo.whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-4 rounded-2xl bg-[#25D366] text-white font-bold text-sm tracking-wide shadow-md flex items-center justify-center gap-2"
-            >
-              <WhatsAppIcon className="w-5 h-5" /> Falar com a Recepção (WhatsApp)
-            </a>
-          </motion.div>
+          <div className="md:hidden text-[10px] opacity-40 uppercase tracking-widest text-center pt-2">
+            © {new Date().getFullYear()} Pousada Charme da Montanha
+          </div>
         </div>
 
       </main>
 
-      {/* Persistent Tiny Mobile Footer */}
-      <footer className="md:hidden fixed bottom-0 left-0 right-0 py-3 bg-white/90 dark:bg-[#1A1A17]/90 backdrop-blur border-t border-[#A68A56]/10 text-center text-[10px] opacity-50 z-10 uppercase tracking-widest">
-        © {new Date().getFullYear()} Pousada Charme da Montanha
-      </footer>
+      {/* Persistent Mobile Reception CTA — always reachable from any tab/scroll position */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/90 dark:bg-[#1A1A17]/90 backdrop-blur border-t border-[#A68A56]/10 z-20">
+        <motion.a
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          href={contactInfo.whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full py-3.5 rounded-2xl bg-[#25D366] text-white font-bold text-sm tracking-wide shadow-md flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#25D366]"
+        >
+          <WhatsAppIcon className="w-5 h-5" /> Falar com a Recepção (WhatsApp)
+        </motion.a>
+      </div>
     </div>
   );
 }

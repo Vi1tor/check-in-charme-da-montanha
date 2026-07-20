@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Tailwind v4 defaults `dark:` to the OS prefers-color-scheme media query.
+   This app has a manual light/dark toggle, so dark: must instead follow
+   the `.dark` class placed on the root wrapper by that toggle. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-inter: var(--font-inter);
   --font-cormorant: var(--font-cormorant);
@@ -20,15 +25,16 @@
     --gold: #A68A56;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --brand-primary: #9a9a7a;
-      --brand-secondary: #c2aa7a;
-      --brand-bg: #1A1A17;
-      --brand-ink: #F5F5F0;
-      --card-bg: rgba(35, 35, 30, 0.58);
-      --card-border: rgba(166, 138, 86, 0.28);
-    }
+  /* Overrides driven by the `.dark` class the theme toggle sets — not the OS
+     media query — so these variables always agree with the toggle button and
+     with the Tailwind `dark:` variant above. */
+  .dark {
+    --brand-primary: #9a9a7a;
+    --brand-secondary: #c2aa7a;
+    --brand-bg: #1A1A17;
+    --brand-ink: #F5F5F0;
+    --card-bg: rgba(35, 35, 30, 0.58);
+    --card-border: rgba(166, 138, 86, 0.28);
   }
 
   body {
