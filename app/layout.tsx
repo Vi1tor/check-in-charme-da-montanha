@@ -1,22 +1,26 @@
 import type {Metadata, Viewport} from 'next';
-import { Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+// Fonts are self-hosted (variable, latin subset) so the build never depends on fetching Google Fonts.
+const jakarta = localFont({
+  src: './fonts/PlusJakartaSans-Variable.woff2',
+  weight: '200 800',
+  display: 'swap',
   variable: '--font-jakarta',
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
+const cormorant = localFont({
+  src: './fonts/CormorantGaramond-Variable.woff2',
+  weight: '300 700',
+  display: 'swap',
   variable: '--font-cormorant',
 });
 
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
+const jetbrains = localFont({
+  src: './fonts/JetBrainsMono-Variable.woff2',
+  weight: '100 800',
+  display: 'swap',
   variable: '--font-jetbrains',
 });
 
