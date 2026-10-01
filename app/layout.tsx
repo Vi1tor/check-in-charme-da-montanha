@@ -1,16 +1,23 @@
-import type {Metadata} from 'next';
-import { Inter, Cormorant_Garamond } from 'next/font/google';
+import type {Metadata, Viewport} from 'next';
+import { Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jakarta',
 });
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['500', '600', '700'],
   variable: '--font-cormorant',
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jetbrains',
 });
 
 export const metadata: Metadata = {
@@ -18,10 +25,15 @@ export const metadata: Metadata = {
   description: 'Guia digital completo com informações de check-in, regras, políticas, indicações e localização da Pousada Charme da Montanha em Monte Verde, MG.',
 };
 
+export const viewport: Viewport = {
+  themeColor: '#1E2F23',
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${cormorant.variable}`}>
-      <body suppressHydrationWarning className="bg-[#f5f5f0] text-[#1a1a1a] antialiased">
+    <html lang="pt-BR" className={`${jakarta.variable} ${cormorant.variable} ${jetbrains.variable}`}>
+      <body suppressHydrationWarning className="bg-[#F7F4EE] text-[#1C1917] antialiased selection:bg-[#1E2F23] selection:text-[#F7F4EE]">
         {children}
       </body>
     </html>

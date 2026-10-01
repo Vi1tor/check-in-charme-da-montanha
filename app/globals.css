@@ -1,58 +1,24 @@
 @import "tailwindcss";
 
-/* Tailwind v4 defaults `dark:` to the OS prefers-color-scheme media query.
-   This app has a manual light/dark toggle, so dark: must instead follow
-   the `.dark` class placed on the root wrapper by that toggle. */
-@custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-  --font-inter: var(--font-inter);
-  --font-cormorant: var(--font-cormorant);
-  --color-brand-primary: #5A5A40;
-  --color-brand-secondary: #A68A56;
-  --color-brand-bg: #f5f5f0;
-  --color-brand-ink: #2D2A26;
+@theme inline {
+  --font-sans: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @layer base {
-  :root {
-    --brand-primary: #5A5A40;
-    --brand-secondary: #A68A56;
-    --brand-bg: #F5F5F0;
-    --brand-ink: #2D2A26;
-    --card-bg: rgba(255, 255, 255, 0.42);
-    --card-border: rgba(166, 138, 86, 0.18);
-    --gold: #A68A56;
+  html {
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
-  /* Overrides driven by the `.dark` class the theme toggle sets — not the OS
-     media query — so these variables always agree with the toggle button and
-     with the Tailwind `dark:` variant above. */
-  .dark {
-    --brand-primary: #9a9a7a;
-    --brand-secondary: #c2aa7a;
-    --brand-bg: #1A1A17;
-    --brand-ink: #F5F5F0;
-    --card-bg: rgba(35, 35, 30, 0.58);
-    --card-border: rgba(166, 138, 86, 0.28);
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-serif);
+    text-wrap: balance;
   }
-
-  body {
-    background-color: var(--brand-bg);
-    color: var(--brand-ink);
-  }
-}
-
-.dot-pattern {
-  background-image: radial-gradient(var(--brand-secondary) 0.5px, transparent 0.5px);
-  background-size: 10px 10px;
-  opacity: 0.15;
-}
-
-.card-glass {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }

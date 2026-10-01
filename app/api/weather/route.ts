@@ -6,7 +6,7 @@ const LONGITUDE = -46.0375;
 
 export async function GET(req: NextRequest) {
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code&timezone=America%2FSao_Paulo`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=1&timezone=America%2FSao_Paulo`;
     
     const response = await fetch(url, {
       next: { revalidate: 900 }, // Cache the weather result for 15 minutes
@@ -18,6 +18,8 @@ export async function GET(req: NextRequest) {
 
     const data = await response.json();
     const current = data.current;
+    const daily = data.daily;
+    const roundOrNull = (value: unknown) => (typeof value === "number" ? Math.round(value) : null);
 
     // Map WMO Weather Interpretation Codes (WMO code) to friendly descriptions and icons
     // See https://open-meteo.com/en/docs for code list
@@ -64,6 +66,10 @@ export async function GET(req: NextRequest) {
       conditionText: condition.text,
       icon,
       isDay: current?.is_day === 1,
+      code,
+      min: roundOrNull(daily?.temperature_2m_min?.[0]),
+      max: roundOrNull(daily?.temperature_2m_max?.[0]),
+      rainChance: roundOrNull(daily?.precipitation_probability_max?.[0]),
     });
   } catch (error) {
     console.error("Weather route error:", error);
@@ -75,6 +81,10 @@ export async function GET(req: NextRequest) {
       conditionText: "Clima serrano agradável",
       icon: "🌲",
       isDay: true,
+      code: null,
+      min: null,
+      max: null,
+      rainChance: null,
     });
   }
 }
